@@ -1,0 +1,30 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Prueba - Proyectos",
+        "description": "Documentación de prueba para el proyecto Laravel",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/proyectos": {
+            "get": {
+                "tags": [
+                    "Proyectos"
+                ],
+                "summary": "Obtener todos los proyectos",
+                "operationId": "de7ba44d92faaf00ef247d0af10376e0",
+                "responses": {
+                    "200": {
+                        "description": "Lista de proyectos obtenida con éxito"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Proyectos",
+            "description": "Proyectos"
+        }
+    ]
+}
