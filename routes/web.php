@@ -1,18 +1,31 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MainController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProyectoController;
 
-// Ruta para mostrar el formulario de login (GET)
+// Mostrar y procesar el formulario de inicio de sesión.
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-
-// Ruta para procesar el formulario (POST)
 Route::post('/login', [AuthController::class, 'login']);
 
-// Ruta para cerrar sesión (POST)
+// Cerrar sesión.
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Ruta de prueba para el Home (protegida: solo entra si está logueado)
+// Mostrar el saludo de prueba.
 Route::get('/', function () {
-    return "¡Bienvenido al sistema, " . auth()->user()->nombre . "!";
+    return '¡Bienvenido al sistema, ' . auth()->user()->nombre . '!';
 })->middleware('auth');
+
+// Mostrar los proyectos asignados al usuario.
+Route::get('/main.php', [MainController::class, 'index'])
+    ->middleware('auth')
+    ->name('simep.main');
+
+Route::get('/proyectoTest.php', [ProyectoController::class, 'mostrar'])
+    ->middleware('auth')
+    ->name('simep.proyecto');
+
+Route::get('/informesCargados.php', [ProyectoController::class, 'mostrarInformes'])
+    ->middleware('auth')
+    ->name('simep.informes');    

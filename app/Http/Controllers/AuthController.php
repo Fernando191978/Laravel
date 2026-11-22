@@ -2,50 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class AuthController extends Controller
 {
-    // Mostrar el formulario de login (la vista)
-    public function showLoginForm()
+    public function showLoginForm(): View
     {
         return view('auth.login');
     }
 
-    // Procesar el intento de login
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
-        // Validar que los campos no vengan vacíos
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required'
+        $credentials = $request->validate([
+            'username' => ['required', 'string'],
+            'password' => ['required', 'string'],
         ]);
 
-        // Intentar autenticar al usuario con el campo 'username'
-        $credentials = $request->only('username', 'password');
-
-        if (Auth::attempt($credentials)) {
-            // Si el login es correcto, regeneramos la sesión (seguridad)
-            $request->session()->regenerate();
-
-            // Redirigir a la página principal o dashboard (lo crearemos luego)
-            return redirect()->intended('/'); 
+        if (!Auth::attempt($credentials)) {
+            return back()
+                ->withErrors([
+                    'username' => 'Las credenciales no coinciden con nuestros registros.',
+                ])
+                ->onlyInput('username');
         }
 
-        // Si falla, volver atrás con un mensaje de error
-        return back()->withErrors([
-            'username' => 'Las credenciales no coinciden con nuestros registros.',
-        ])->onlyInput('username');
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('simep.main'));
     }
 
-    // Cerrar sesión
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect()->route('login');
     }
 }
