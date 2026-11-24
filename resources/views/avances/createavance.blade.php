@@ -20,7 +20,7 @@
                      <label class="label">Seleccione una actividad (*)</label>
                      <select class="form-control" name="actividad" required>
                         @foreach($actividades as $actividad)
-                            <option value="{{ $actividad->id }}">{{ $actividad->nombre }}</option>
+                           <option value="{{ $actividad->id }}">{{ $actividad->nombre }}</option>
                         @endforeach
                      </select>
 
