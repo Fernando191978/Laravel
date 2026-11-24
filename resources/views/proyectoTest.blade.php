@@ -17,21 +17,22 @@
                     </a>
 
                     <a class="btn btn-primary"
-                       href="{{ url('/avanceCarga.php') }}?id={{ $proyecto->id }}">
+                        href="{{ route('actividades.index', ['id' => $proyecto->id]) }}">
+                        Ver todas las actividades
+                    </a>
+
+                    <!-- BOTÓN CORREGIDO: Usa la ruta de Laravel para crear avance -->
+                    <a class="btn btn-primary"
+                       href="{{ route('avances.create', $proyecto->id) }}">
                         Carga de Avances
                     </a>
 
-                    @if ($tipoUsuario == 6)
-                        <a class="btn btn-primary"
-                           href="{{ url('/avancesCargados2.php') }}?id={{ $proyecto->id }}">
-                            Ver Avances cargados
-                        </a>
-                    @else
-                        <a class="btn btn-primary"
-                           href="{{ url('/avancesCargados.php') }}?id={{ $proyecto->id }}">
-                            Ver Avances cargados
-                        </a>
-                    @endif
+                    <!-- BOTÓN CORREGIDO: Usa la ruta de Laravel para listar avances -->
+                    <!-- Como ya no usamos el tipo de usuario para separar vistas, usamos la misma para todos -->
+                    <a class="btn btn-primary"
+                       href="{{ route('avances.index', $proyecto->id) }}">
+                        Ver Avances cargados
+                    </a>
 
                     <a class="btn btn-primary"
                        href="{{ route('simep.informes', ['id' => $proyecto->id]) }}">
@@ -84,16 +85,18 @@
                                             @elseif ($actividad->estado === '')
                                                 <p style="color: red;">
                                                     Estado: No informado
+                                                    <!-- ENLACE CORREGIDO -->
                                                     <a class="send_btn2"
-                                                       href="{{ url('/avanceCarga.php') }}?id={{ $proyecto->id }}&act={{ $actividad->id }}">
+                                                       href="{{ route('avances.create', ['id' => $proyecto->id, 'act' => $actividad->id]) }}">
                                                         Cargar avance
                                                     </a>
                                                 </p>
                                             @else
                                                 <p style="color: blue;">
                                                     Estado: {{ $actividad->estado }}
+                                                    <!-- ENLACE CORREGIDO -->
                                                     <a class="send_btn2"
-                                                       href="{{ url('/avanceCarga.php') }}?id={{ $proyecto->id }}&act={{ $actividad->id }}">
+                                                       href="{{ route('avances.create', ['id' => $proyecto->id, 'act' => $actividad->id]) }}">
                                                         Cargar avance
                                                     </a>
                                                 </p>

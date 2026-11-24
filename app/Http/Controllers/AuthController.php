@@ -21,26 +21,24 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        if (!Auth::attempt($credentials)) {
-            return back()
-                ->withErrors([
-                    'username' => 'Las credenciales no coinciden con nuestros registros.',
-                ])
-                ->onlyInput('username');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('indicadores.index');
         }
 
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('simep.main'));
+        return back()
+            ->withErrors([
+                'username' => 'Las credenciales no coinciden con nuestros registros.',
+            ])
+            ->onlyInput('username');
     }
 
     public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect('/login');
     }
 }

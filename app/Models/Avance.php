@@ -11,6 +11,9 @@ class Avance extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
+
     // Nombre exacto de la tabla
     protected $table = 'grados_avance';
 

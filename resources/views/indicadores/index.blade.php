@@ -1,5 +1,13 @@
-<div class="guarantee">
+
+
+@extends('layouts.app')
+
+@section('content')
+
+<main class="guarantee" style="padding-top: 150px; padding-bottom: 80px;">
+
     <div class="container">
+
         <div class="row">
             <div class="col-md-12">
                 <div class="titlepage text_align_center">
@@ -7,6 +15,7 @@
                         Sistema de
                         <span class="blue_light">Monitoreo y Evaluación Permanente</span>
                     </h2>
+
                     <p>
                         Herramienta de monitoreo de la Planificación Estratégica
                         Participativa de la Facultad de Ciencias Agropecuarias
@@ -17,6 +26,7 @@
         </div>
 
         <div class="row">
+
             <div class="col-lg-3 col-md-6">
                 <div class="guarantee-box_main">
                     <div class="guarantee-box text_align_center">
@@ -35,7 +45,7 @@
                         <h3>Proyectos</h3>
                         <p>59 Proyectos</p>
                     </div>
-                    <a class="read_more" href="#">Ver más</a>
+                    <a class="read_more" href="{{ route('simep.main') }}">Ver más</a>
                 </div>
             </div>
 
@@ -46,7 +56,10 @@
                         <h3>Actividades</h3>
                         <p>673 actividades planificadas</p>
                     </div>
-                    <a class="read_more" href="#">Ver más</a>
+                    <a class="read_more"
+                        href="{{ route('simep.main') }}">
+                        Ver actividades
+                    </a>
                 </div>
             </div>
 
@@ -60,6 +73,10 @@
                     <a class="read_more" href="#">Ver más</a>
                 </div>
             </div>
+
         </div>
     </div>
-</div>
+
+</main>
+
+@endsection
