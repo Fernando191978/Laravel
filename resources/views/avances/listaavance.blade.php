@@ -8,8 +8,10 @@
             <div class="titlepage text_align_center">
                <h2>{{ $proyecto->titulo }}</h2>
                <br>
-               <button type="button" class="btn btn-primary"><a style="color: white;" href="{{ route('simep.main') }}">Volver al proyecto</a></button>
-               <button type="button" class="btn btn-primary"><a style="color: white;" href="{{ route('avances.create', $proyecto->id) }}">Carga de Avances</a></button>
+               <button type="button" class="btn btn-primary">
+                  <a style="color: white;" href="{{ route('simep.main') }}">Volver al proyecto</a></button>
+               <button type="button" class="btn btn-primary">
+                  <a style="color: white;" href="{{ route('avances.create', $proyecto->id) }}">Carga de Avances</a></button>
             </div>
          </div>
          <div class="col-md-12">

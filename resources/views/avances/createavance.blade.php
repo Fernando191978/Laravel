@@ -8,8 +8,12 @@
             <div class="titlepage text_align_center">
                <h2>{{ $proyecto->titulo }}</h2>
                <h3><br><strong>Carga de avance por Actividades</strong></h3><br>
-               <button type="button" class="btn btn-primary"><a style="color: white;" href="{{ route('simep.main') }}">Volver al proyecto</a></button>
-               <button type="button" class="btn btn-primary"><a style="color: white;" href="{{ route('avances.index', $proyecto->id) }}">Ver avances cargados</a></button>
+               <button type="button" class="btn btn-primary">
+                  <a style="color: white;" href="{{ route('simep.main') }}">Volver al proyecto</a>
+               </button>
+               <button type="button" class="btn btn-primary">
+                  <a style="color: white;" href="{{ route('avances.index', $proyecto->id) }}">Ver avances cargados</a>
+               </button>
             </div>
          </div>
          <div class="col-md-10 offset-md-1">

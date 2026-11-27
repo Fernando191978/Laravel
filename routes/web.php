@@ -36,8 +36,11 @@ Route::get('/informesCargados.php', [ProyectoController::class, 'mostrarInformes
 // --- RUTAS DE AVANCES (Agregar al final) ---
 Route::middleware('auth')->group(function () {
     Route::get('/proyecto/{id}/avances', [AvanceController::class, 'index'])->name('avances.index');
+
     Route::get('/proyecto/{id}/avances/cargar', [AvanceController::class, 'create'])->name('avances.create');
+
     Route::post('/proyecto/{id}/avances', [AvanceController::class, 'store'])->name('avances.store');
+    
     Route::delete('/avance/{id}/eliminar', [AvanceController::class, 'destroy'])->name('avances.destroy');
 }); 
 
