@@ -1,5 +1,3 @@
-
-
 @extends('layouts.app')
 
 @section('content')
@@ -30,7 +28,11 @@
             <div class="col-lg-3 col-md-6">
                 <div class="guarantee-box_main">
                     <div class="guarantee-box text_align_center">
-                        <img src="{{ asset('images/programas.png') }}" alt="Programas">
+                        <img
+                            class="imagen-azul"
+                            src="{{ asset('images/programas.png') }}"
+                            alt="Programas"
+                        >
                         <h3>Programas</h3>
                         <p>8 programas</p>
                     </div>
@@ -41,7 +43,11 @@
             <div class="col-lg-3 col-md-6">
                 <div class="guarantee-box_main">
                     <div class="guarantee-box text_align_center">
-                        <img src="{{ asset('images/proyectos.png') }}" alt="Proyectos">
+                        <img
+                            class="imagen-azul"
+                            src="{{ asset('images/proyectos.png') }}"
+                            alt="Proyectos"
+                        >
                         <h3>Proyectos</h3>
                         <p>59 Proyectos</p>
                     </div>
@@ -52,12 +58,15 @@
             <div class="col-lg-3 col-md-6">
                 <div class="guarantee-box_main">
                     <div class="guarantee-box text_align_center">
-                        <img src="{{ asset('images/actividades.png') }}" alt="Actividades">
+                        <img
+                            class="imagen-azul"
+                            src="{{ asset('images/actividades.png') }}"
+                            alt="Actividades"
+                        >
                         <h3>Actividades</h3>
                         <p>673 actividades planificadas</p>
                     </div>
-                    <a class="read_more"
-                        href="{{ route('simep.main') }}">
+                    <a class="read_more" href="{{ route('simep.main') }}">
                         Ver actividades
                     </a>
                 </div>
@@ -66,7 +75,11 @@
             <div class="col-lg-3 col-md-6">
                 <div class="guarantee-box_main">
                     <div class="guarantee-box text_align_center">
-                        <img src="{{ asset('images/participantes.png') }}" alt="Participantes">
+                        <img
+                            class="imagen-azul"
+                            src="{{ asset('images/participantes.png') }}"
+                            alt="Participantes"
+                        >
                         <h3>Participantes</h3>
                         <p>+600 Participantes</p>
                     </div>

@@ -26,6 +26,7 @@
                                 src="{{ asset('images/proyectos.png') }}"
                                 width="150"
                                 alt="Proyectos"
+                                class="imagen-azul"
                             >
                             <h3>{{ $proyecto->titulo }}</h3>
                         </div>
