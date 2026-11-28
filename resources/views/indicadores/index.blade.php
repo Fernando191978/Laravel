@@ -88,6 +88,20 @@
             </div>
 
         </div>
+
+        <div class="titlepage text_align_center">
+    <h2>
+        SOBRE EL <span class="blue_light">SIMEP</span>
+    </h2>
+</div>
+
+            <img
+                src="{{ asset('images/pep.webp') }}"
+                alt="Ilustración sobre el SIMEP"
+                class="imagen-simep"
+            >
+        </section>
+
     </div>
 
 </main>
