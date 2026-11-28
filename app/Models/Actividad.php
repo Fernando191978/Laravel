@@ -31,14 +31,14 @@ class Actividad extends Model
         'objetivoEspecifico',
     ];
 
-    // Relación: Una actividad pertenece a un proyecto
-    public function proyecto()
+    // Relación: Una actividad pertenece a un proyecto ***
+    public function datosProyecto()
     {
         return $this->belongsTo(Proyecto::class, 'proyecto');
     }
 
     // Relación: Una actividad pertenece a un objetivo específico
-    public function objetivoEspecifico()
+    public function datosObjetivoEspecifico()
     {
         return $this->belongsTo(ObjetivoEspecifico::class, 'objetivoEspecifico');
     }

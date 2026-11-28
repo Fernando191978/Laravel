@@ -9,6 +9,7 @@
         "php": "^8.3",
         "darkaonline/l5-swagger": "^11.4",
         "doctrine/annotations": "^2.0",
+        "laravel-lang/common": "^6.9",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0"
     },

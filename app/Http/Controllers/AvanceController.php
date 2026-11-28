@@ -2,82 +2,94 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Proyecto;
-use App\Models\Avance;
 use App\Models\Actividad;
+use App\Models\Avance;
+use App\Models\Proyecto;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class AvanceController extends Controller
 {
-    // 1. Listar avances de un proyecto (avancesCargados.php)
+    // Listar los avances de un proyecto.
     public function index($idProyecto)
     {
         $proyecto = Proyecto::findOrFail($idProyecto);
-        // Usamos la relación definida en el modelo (o consultamos directo)
-        $avances = Avance::where('proyecto', $idProyecto)->orderBy('fecha', 'desc')->get();
+
+        $avances = Avance::where('proyecto', $idProyecto)
+            ->orderBy('fecha', 'desc')
+            ->get();
 
         return view('avances.listaavance', compact('proyecto', 'avances'));
     }
 
-    // 2. Mostrar formulario de carga (avanceCarga.php)
+    // Mostrar el formulario para cargar un avance.
     public function create($idProyecto)
     {
         $proyecto = Proyecto::findOrFail($idProyecto);
-        // Traemos las actividades del proyecto para el select
+
         $actividades = Actividad::where('proyecto', $idProyecto)->get();
 
         return view('avances.createavance', compact('proyecto', 'actividades'));
     }
 
-    // 3. Guardar el avance (el action del formulario)
+    // Guardar el avance.
     public function store(Request $request, $idProyecto)
     {
-        // Validación básica
-        $request->validate([
-            'actividad' => 'required',
-            'estado' => 'required',
-            'fuenteV' => 'required|file|mimes:jpg,png,pdf,zip,rar|max:10240', // Máx 10MB
+        $datos = $request->validate([
+            'actividad' => [
+                'required',
+                'integer',
+                Rule::exists('actividades', 'id')
+                    ->where('proyecto', $idProyecto),
+            ],
+            'estado' => ['required', 'string'],
+            'inicio' => ['required', 'date'],
+            'fin' => ['required', 'date', 'after_or_equal:inicio'],
+            'obs' => ['nullable', 'string'],
+            'justificacion' => ['nullable', 'string'],
+            'fuenteV' => [
+                'required',
+                'file',
+                'mimes:jpg,png,pdf,zip,rar',
+                'max:10240',
+            ],
         ]);
 
-        // Manejo del archivo (fuente de validación)
-        $archivoNombre = null;
-        if ($request->hasFile('fuenteV')) {
-            $archivo = $request->file('fuenteV');
-            $archivoNombre = time() . '_' . $archivo->getClientOriginalName();
-            // Guardamos en storage/app/public/fuenteValidacion
-            $archivo->storeAs('public/fuenteValidacion', $archivoNombre);
-        }
+        $archivo = $request->file('fuenteV');
+        $archivoNombre = time() . '_' . $archivo->getClientOriginalName();
 
-        // Creamos el avance
+        $archivo->storeAs('public/fuenteValidacion', $archivoNombre);
+
         Avance::create([
             'proyecto' => $idProyecto,
-            'actividad' => $request->actividad,
-            'fecha' => now(), // Fecha actual
+            'actividad' => $datos['actividad'],
+            'fecha' => now(),
             'fuenteValidacion' => $archivoNombre,
-            'estado' => $request->estado,
-            'observaciones' => $request->obs,
-            'justificacion' => $request->justificacion ?? '',
+            'estado' => $datos['estado'],
+            'observaciones' => $datos['obs'] ?? null,
+            'justificacion' => $datos['justificacion'] ?? '',
             'usuario' => Auth::id(),
-            'inicio' => null,
-            'fin' => null,
+            'inicio' => $datos['inicio'],
+            'fin' => $datos['fin'],
             'activo' => 1,
         ]);
 
-        return redirect()->route('avances.index', $idProyecto)
-                         ->with('success', 'Avance cargado exitosamente.');
+        return redirect()
+            ->route('avances.index', $idProyecto)
+            ->with('success', 'Avance cargado exitosamente.');
     }
 
-    // 4. Eliminar avance (avanceEliminar.php)
+    // Desactivar un avance.
     public function destroy($idAvance)
     {
         $avance = Avance::findOrFail($idAvance);
         $idProyecto = $avance->proyecto;
-        
-        // Usamos el método desactivar() que creamos en el modelo
+
         $avance->desactivar();
 
-        return redirect()->route('avances.index', $idProyecto)
-                         ->with('success', 'Avance eliminado con éxito.');
+        return redirect()
+            ->route('avances.index', $idProyecto)
+            ->with('success', 'Avance eliminado con éxito.');
     }
 }

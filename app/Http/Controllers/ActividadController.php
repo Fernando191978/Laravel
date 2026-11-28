@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Proyecto;
 use App\Models\Actividad;
 use App\Models\ObjetivoEspecifico;
+use Illuminate\Pagination\Paginator;
 
 class ActividadController extends Controller
 {
@@ -18,6 +19,17 @@ class ActividadController extends Controller
         $objetivos = ObjetivoEspecifico::where('proyecto', $idProyecto)->get();
 
         return view('actividades.listaActividades', compact('proyecto', 'actividades', 'objetivos'));
+    }
+
+        // Listar TODAS las actividades de todos los proyectos
+    public function listaCompletaActividades()
+    {
+        // Traemos todas las actividades con su proyecto y objetivo asociados
+        Paginator::useBootstrapFive(); 
+        $actividades = Actividad::with(['datosObjetivoEspecifico'])->paginate(10);
+
+        // Retornamos una nueva vista (que crearemos a continuación)
+        return view('actividades.listaCompletaActividades', compact('actividades'));
     }
 
     // Mostrar el formulario de carga (equivale a cargaActividadSimple.php)
